@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  unbound:
+    image: dubhad/unbound:1.11.0
+    restart: always
+    volumes:
+      - ./root.hints:/usr/local/etc/unbound/root.hints:ro
+    environment:
+      - THREADS
+      - SLABS
+  shadowsocks:
+    image: dubhad/shadowsocks-v2ray:3.3.4-1.3.1
+    restart: always
+    volumes:
+      - ./certs:/etc/ssl/proxy:ro
+    environment:
+      - TIMEOUT=300
+      - METHOD=xchacha20-ietf-poly1305
+      - DNS_SERVER
+      - PASSWORD
+      - DOMAIN
+      - V2RAY_CERT_PATH
+      - V2RAY_KEY_PATH
+      - V2RAY_PATH
+    depends_on:
+      - unbound
+  nginx:
+    image: dubhad/nginx-shadowsocks:1.19
+    restart: always
+    volumes:
+      - ./certs:/etc/ssl/proxy:ro
+    ports:
+      - "443:443"
+    environment:
+      - V2RAY_PORT=8008
+      - V2RAY_HOST=shadowsocks
+      - DHPARAM_PATH=/etc/ssl/proxy/dhparams.pem
+      - DNS_SERVER
+      - DOMAIN
+      - V2RAY_CERT_PATH
+      - V2RAY_KEY_PATH
+      - V2RAY_PATH
+      - REDIRECT_URL
+      - NOFILE_LIMIT
+    depends_on:
+      - shadowsocks
+      - unbound
