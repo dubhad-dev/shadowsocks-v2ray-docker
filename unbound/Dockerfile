@@ -41,9 +41,9 @@ RUN useradd -Urs /usr/bin/nologin unbound
 
 RUN wget -O root.hints https://www.internic.net/domain/named.cache --progress=dot:giga
 
-RUN unbound-anchor -a root.key || :
-
 COPY unbound.conf.template ./templates/unbound.conf.template
+
+RUN unbound-anchor -a root.key || :
 
 ENV THREADS=1
 ENV SLABS=1

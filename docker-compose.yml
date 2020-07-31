@@ -3,6 +3,9 @@ version: '3.8'
 services:
   unbound:
     image: dubhad/unbound:1.11.0
+    networks:
+      default:
+        ipv4_address: 172.16.238.10
     restart: always
     volumes:
       - ./root.hints:/usr/local/etc/unbound/root.hints:ro
@@ -46,3 +49,10 @@ services:
     depends_on:
       - shadowsocks
       - unbound
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
