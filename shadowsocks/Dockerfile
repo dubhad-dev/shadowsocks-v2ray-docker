@@ -1,4 +1,4 @@
-FROM debian:10.4 AS build
+FROM debian:10.5 AS build
 
 ARG SHADOWSOCKS_VERSION=3.3.4
 
@@ -25,7 +25,7 @@ RUN wget -O shadowsocks-libev.tar.gz https://github.com/shadowsocks/shadowsocks-
     && make install
 
 
-FROM debian:10.4 AS run
+FROM debian:10.5 AS run
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       libev4 \
