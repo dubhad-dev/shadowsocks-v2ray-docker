@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   shadowsocks:
-    image: dubhad/shadowsocks-v2ray:3.3.4-1.3.1
+    image: dubhad/shadowsocks-v2ray:3.3.5-1.3.1
     restart: always
     volumes:
       - ./certs:/etc/ssl/proxy:ro
@@ -16,7 +16,7 @@ services:
       - V2RAY_KEY_PATH
       - V2RAY_PATH
   nginx:
-    image: dubhad/nginx-shadowsocks:1.19
+    image: dubhad/nginx-shadowsocks:1.19.2
     restart: always
     volumes:
       - ./certs:/etc/ssl/proxy:ro
