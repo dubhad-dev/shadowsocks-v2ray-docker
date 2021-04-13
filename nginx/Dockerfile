@@ -1,4 +1,4 @@
-FROM nginx:1.19.4
+FROM nginx:1.19.9
 
 ENV NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
 

@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   shadowsocks:
@@ -16,7 +16,7 @@ services:
       - V2RAY_KEY_PATH
       - V2RAY_PATH
   nginx:
-    image: dubhad/nginx-shadowsocks:1.19.4
+    image: dubhad/nginx-shadowsocks:1.19.9
     restart: always
     volumes:
       - ./certs:/etc/ssl/proxy:ro
