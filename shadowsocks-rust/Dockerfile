@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       wget \
       ca-certificates \
       xz-utils \
+      gettext-base \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O shadowsocks-rust.tar.xz https://github.com/shadowsocks/shadowsocks-rust/releases/download/v${SHADOWSOCKS_RUST_VERSION}/shadowsocks-v${SHADOWSOCKS_RUST_VERSION}.x86_64-unknown-linux-gnu.tar.xz --progress=dot:giga \
@@ -21,7 +22,7 @@ RUN wget -O v2ray-plugin.tar.gz https://github.com/shadowsocks/v2ray-plugin/rele
 
 ENV METHOD=chacha20-ietf-poly1305
 ENV PASSWORD=
-ENV DNS_SERVER=cloudflare
+ENV DNS=cloudflare
 ENV V2RAY_PATH=v2ray
 ENV DOMAIN=
 ENV V2RAY_CERT_PATH=
@@ -29,12 +30,11 @@ ENV V2RAY_KEY_PATH=
 
 EXPOSE 8008
 
-CMD exec ssserver \
-      --tcp-fast-open \
-      --tcp-no-delay \
-      --server-addr 0.0.0.0:8008 \
-      --password ${PASSWORD} \
-      --encrypt-method ${METHOD} \
-      --dns ${DNS_SERVER} \
-      --plugin v2ray-plugin \
-      --plugin-opts "server;tls;fast-open;path=/${V2RAY_PATH};host=${DOMAIN};cert=${V2RAY_CERT_PATH};key=${V2RAY_KEY_PATH};loglevel=none"
+RUN mkdir /docker-entrypoint.d
+COPY docker-entrypoint.sh /
+COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+COPY config.json.template /usr/local/etc/shadowsocks/templates/config.json.template
+
+CMD ["ssserver", "-c", "/usr/local/etc/shadowsocks/config.json"]

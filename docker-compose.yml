@@ -7,7 +7,7 @@ services:
     volumes:
       - ./certs:/etc/ssl/proxy:ro
     environment:
-      - METHOD=chacha20-ietf-poly1305
+      - METHOD=aes-256-gcm
       - DNS_SERVER=cloudflare
       - PASSWORD
       - DOMAIN
@@ -24,7 +24,7 @@ services:
     environment:
       - V2RAY_PORT=8008
       - V2RAY_HOST=shadowsocks
-      - DNS_SERVER=1.1.1.1
+      - DNS_SERVER=127.0.0.11
       - DOMAIN
       - V2RAY_CERT_PATH
       - V2RAY_KEY_PATH
