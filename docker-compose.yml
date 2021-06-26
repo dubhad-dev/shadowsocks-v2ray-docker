@@ -7,8 +7,8 @@ services:
     volumes:
       - ./certs:/etc/ssl/proxy:ro
     environment:
-      - METHOD=aes-256-gcm
-      - DNS_SERVER=cloudflare
+      - METHOD=chacha20-ietf-poly1305
+      - DNS=cloudflare_tls
       - PASSWORD
       - DOMAIN
       - V2RAY_CERT_PATH
