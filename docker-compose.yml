@@ -2,21 +2,20 @@ version: "3.8"
 
 services:
   shadowsocks:
-    image: dubhad/shadowsocks-v2ray:3.3.5-1.3.1
+    image: dubhad/shadowsocks-rust-v2ray:1.11.1-1.3.1
     restart: always
     volumes:
       - ./certs:/etc/ssl/proxy:ro
     environment:
-      - TIMEOUT=300
-      - METHOD=xchacha20-ietf-poly1305
-      - DNS_SERVER
+      - METHOD=chacha20-ietf-poly1305
+      - DNS_SERVER=cloudflare
       - PASSWORD
       - DOMAIN
       - V2RAY_CERT_PATH
       - V2RAY_KEY_PATH
       - V2RAY_PATH
   nginx:
-    image: dubhad/nginx-shadowsocks:1.19.9
+    image: dubhad/nginx-shadowsocks:1.21.0
     restart: always
     volumes:
       - ./certs:/etc/ssl/proxy:ro
@@ -25,13 +24,11 @@ services:
     environment:
       - V2RAY_PORT=8008
       - V2RAY_HOST=shadowsocks
-      - DHPARAM_PATH=/etc/ssl/proxy/dhparams.pem
-      - DNS_SERVER
+      - DNS_SERVER=1.1.1.1
       - DOMAIN
       - V2RAY_CERT_PATH
       - V2RAY_KEY_PATH
       - V2RAY_PATH
       - REDIRECT_URL
-      - NOFILE_LIMIT
     depends_on:
       - shadowsocks
