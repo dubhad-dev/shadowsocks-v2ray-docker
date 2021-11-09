@@ -1,13 +1,8 @@
-FROM rust:1.53.0-buster AS build
+FROM rust:1.56.1 AS build
 
-ARG SHADOWSOCKS_RUST_VERSION=1.11.1
+ARG SHADOWSOCKS_RUST_VERSION=1.12.0
 
 WORKDIR /build
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-      wget \
-      ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O shadowsocks-rust.tar.xz https://github.com/shadowsocks/shadowsocks-rust/archive/refs/tags/v${SHADOWSOCKS_RUST_VERSION}.tar.gz --progress=dot:giga \
     && tar -xzf shadowsocks-rust.tar.xz --strip 1 \
@@ -15,7 +10,7 @@ RUN wget -O shadowsocks-rust.tar.xz https://github.com/shadowsocks/shadowsocks-r
     && make install TARGET=release
 
 
-FROM debian:10.10 AS run
+FROM debian:11.1 AS run
     
 COPY --from=build /usr/local/bin/ss* /usr/local/bin/
     
@@ -42,3 +37,4 @@ COPY config.json.template /usr/local/etc/shadowsocks/templates/config.json.templ
 EXPOSE 8008
 
 CMD ["ssserver", "-c", "/usr/local/etc/shadowsocks/config.json"]
+
