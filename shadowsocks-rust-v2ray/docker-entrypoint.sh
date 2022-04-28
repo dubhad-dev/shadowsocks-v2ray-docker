@@ -30,4 +30,6 @@ if [ "$1" = "ssserver" ]; then
     fi
 fi
 
+set -- gosu nobody "$@"
+
 exec "$@"

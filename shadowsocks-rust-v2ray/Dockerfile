@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       wget \
       ca-certificates \
       gettext-base \
+      gosu \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O v2ray-plugin.tar.gz https://github.com/shadowsocks/v2ray-plugin/releases/download/v${V2RAY_PLUGIN_VERSION}/v2ray-plugin-linux-amd64-v${V2RAY_PLUGIN_VERSION}.tar.gz --progress=dot:giga \
