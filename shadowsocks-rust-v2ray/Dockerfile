@@ -1,6 +1,6 @@
-FROM rust:1.56.1 AS build
+FROM rust:1.60.0 AS build
 
-ARG SHADOWSOCKS_RUST_VERSION=1.12.0
+ARG SHADOWSOCKS_RUST_VERSION=1.14.3
 
 WORKDIR /build
 
@@ -10,7 +10,7 @@ RUN wget -O shadowsocks-rust.tar.xz https://github.com/shadowsocks/shadowsocks-r
     && make install TARGET=release
 
 
-FROM debian:11.1 AS run
+FROM debian:11.3 AS run
     
 COPY --from=build /usr/local/bin/ss* /usr/local/bin/
     
@@ -37,4 +37,3 @@ COPY config.json.template /usr/local/etc/shadowsocks/templates/config.json.templ
 EXPOSE 8008
 
 CMD ["ssserver", "-c", "/usr/local/etc/shadowsocks/config.json"]
-

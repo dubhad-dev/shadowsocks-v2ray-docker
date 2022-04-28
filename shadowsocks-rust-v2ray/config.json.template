@@ -5,8 +5,6 @@
     "method": "${METHOD}",
     "dns": "${DNS}",
     "mode": "tcp_only",
-    "no_delay": true,
-    "fast_open": true,
     "plugin":"v2ray-plugin",
-    "plugin_opts":"server;tls;fast-open;path=/${V2RAY_PATH};host=${DOMAIN};cert=${V2RAY_CERT_PATH};key=${V2RAY_KEY_PATH};loglevel=none"
+    "plugin_opts":"server;tls;path=/${V2RAY_PATH};host=${DOMAIN};cert=${V2RAY_CERT_PATH};key=${V2RAY_KEY_PATH};loglevel=none"
 } 
