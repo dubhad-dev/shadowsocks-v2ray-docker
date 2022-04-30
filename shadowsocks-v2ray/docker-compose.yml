@@ -1,0 +1,16 @@
+services:
+  shadowsocks_v2ray:
+    image: dubhad/shadowsocks-rust-v2ray:1.14.3-1.3.1
+    restart: always
+    ports:
+      - "443:8008/tcp"
+      - "443:8008/udp"
+    volumes:
+      - ./certs:/etc/ssl/proxy:ro
+    environment:
+      - SS_SERVER_METHOD=chacha20-ietf-poly1305
+      - SS_SERVER_DNS=cloudflare_https
+      - SS_SERVER_MODE=tcp_and_udp
+      - SS_SERVER_LOG_LEVEL=3
+      - SS_SERVER_PASSWORD
+      - SS_V2RAY_PLUGIN_OPTS

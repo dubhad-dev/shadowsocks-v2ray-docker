@@ -1,0 +1,13 @@
+services:
+  shadowsocks:
+    image: dubhad/shadowsocks-rust:1.14.3
+    restart: always
+    ports:
+      - "27799:8008/tcp"
+      - "27799:8008/udp"
+    environment:
+      - SS_SERVER_METHOD=chacha20-ietf-poly1305
+      - SS_SERVER_DNS=cloudflare_https
+      - SS_SERVER_MODE=tcp_and_udp
+      - SS_SERVER_LOG_LEVEL=3
+      - SS_SERVER_PASSWORD
