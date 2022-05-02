@@ -11,6 +11,6 @@ services:
       - SS_SERVER_METHOD=chacha20-ietf-poly1305
       - SS_SERVER_DNS=cloudflare_https
       - SS_SERVER_MODE=tcp_and_udp
-      - SS_SERVER_LOG_LEVEL=3
+      - SS_SERVER_LOG_LEVEL=1
       - SS_SERVER_PASSWORD
       - SS_V2RAY_PLUGIN_OPTS
